@@ -118,7 +118,7 @@ class _TrafficLightState extends State<TrafficLight> with SingleTickerProviderSt
   double getMillisecondTick(double animationValue) {
     // calculate current millisecond by getting the percentage of total duration using animationValue which represents controller percentage
     // then subtract delay
-    double currentTick = widget.trafficLightSchedule.lampScheduleDuration.inMilliseconds * animationValue - animationDelay.inMilliseconds;
+    double currentTick = totalDuration.inMilliseconds * animationValue - animationDelay.inMilliseconds;
     if (currentTick < 0) {
       // implies animation is currently still being delayed due to chaos mode
       return 0;

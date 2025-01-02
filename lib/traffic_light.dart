@@ -9,6 +9,7 @@ class TrafficLight extends StatefulWidget {
   TrafficLightSchedule trafficLightSchedule;
   AnimationController? animationController;
   DateTime startTime;
+  Duration animationDelay;
 
   double lightWidth;
   double lightHeight;
@@ -23,7 +24,8 @@ class TrafficLight extends StatefulWidget {
     required this.lightWidth,
     required this.lampHeight,
     required this.lampWidth,
-    required this.startTime
+    required this.startTime,
+    required this.animationDelay
   });
 
   @override
@@ -57,7 +59,7 @@ class _TrafficLightState extends State<TrafficLight> with SingleTickerProviderSt
   }
 
   void resetAnimationDelay() {
-    animationDelay = Duration(milliseconds: Random().nextInt(5000));
+    animationDelay = widget.animationDelay;
   }
 
 

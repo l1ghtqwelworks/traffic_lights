@@ -81,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   late Duration animationDuration;
 
 
+  late List<Duration> animationDelays;
 
 
   @override
@@ -90,6 +91,16 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
     animationController = null;
     chaosMode = true;
+
+    setRandomDelays();
+  }
+
+  void setRandomDelays() {
+    animationDelays = List<Duration>.generate(colCount * rowCount, (i) => Duration(milliseconds: Random().nextInt(5000)));
+  }
+
+  void setNoAnimationDelay() {
+    animationDelays = List.filled(colCount * rowCount, Duration.zero);
   }
 
   // 5 * 200 = 1000
@@ -106,8 +117,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       if (chaosMode) {
         syncedController.reset();
         animationController = null;
+        setRandomDelays();
       }
       else {
+        setNoAnimationDelay(); // kind of unnecessary since when running in synced mode animation delay isn't really used, but might as well
         animationController = syncedController;
         Future.delayed(Duration.zero, () {
           syncedController.repeat();
@@ -155,6 +168,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                     lampWidth: 20,
                     lampHeight: 20,
                     startTime: startTime,
+                    animationDelay: animationDelays[rowIndex * colCount + colIndex],
                   )
                 ]
               ],
